@@ -2,7 +2,7 @@
 
 This package demonstrates a packaging workflow
 
-- source dependencies: `bar` from [`scm-dep`](../scm-dep)
+- source dependencies: `bar` from [`scm-dep`](../../../scm-dep)
 
 
 ## Development workflow
