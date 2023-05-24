@@ -1,4 +1,4 @@
--e ../scm-dep
+-e git+https://github.com/suvayu/scm-dep.git
 pytest
 setuptools>=45
 setuptools_scm[toml]>=6.2
