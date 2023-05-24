@@ -1,3 +1,4 @@
+-e ../scm-dep
 pytest
 setuptools>=45
 setuptools_scm[toml]>=6.2
