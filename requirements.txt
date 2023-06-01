@@ -1,5 +1,8 @@
--e git+https://github.com/suvayu/scm-dep.git
--e git+https://github.com/suvayu/scm-base.git
 pytest
 setuptools>=45
 setuptools_scm[toml]>=6.2
+wheel
+build
+-e git+https://github.com/suvayu/scm-dep.git#egg=sa-bar
+-e git+https://github.com/suvayu/scm-base.git#egg=sa-baz
+-e .
