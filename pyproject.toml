@@ -1,9 +1,16 @@
 [project]
-name = "foo"
+name = "sa-foo"
 dynamic = ["version"]
+dependencies = [
+  "sa-bar >= 0.1",
+  "sa-baz >= 0.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
 
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=64", "setuptools_scm[toml]>=6.2", "wheel", "build"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
