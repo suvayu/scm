@@ -1,8 +1,10 @@
-pytest
-setuptools>=45
+setuptools>=64
 setuptools_scm[toml]>=6.2
 wheel
 build
+tomlkit
+gitpython
+pytest
 -e git+https://github.com/suvayu/scm-dep.git#egg=sa-bar
 -e git+https://github.com/suvayu/scm-base.git#egg=sa-baz
 -e .
