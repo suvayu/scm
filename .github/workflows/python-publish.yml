@@ -11,7 +11,7 @@ on:
 jobs:
   # add [python version x platform] matrix to support native implementations
   publish:
-    if: github.ref_type == "tag"
+    if: github.ref_type == 'tag'
 
     runs-on: ubuntu-latest
 
