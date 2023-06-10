@@ -1,7 +1,7 @@
 [project]
 name = "sa-foo"
 dynamic = ["version"]
-dependencies = ["sa-bar>=0.3.0", "sa-baz>=0.3.0", "numpy"]
+dependencies = ["sa-bar>=0.2.2", "sa-baz>=0.3.0", "numpy"]
 
 [project.optional-dependencies]
 test = ["pytest"]
