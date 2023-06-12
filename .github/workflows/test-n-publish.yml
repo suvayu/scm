@@ -45,8 +45,9 @@ jobs:
     - name: Save ${{ matrix.pkg }} wheel
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.pkg }}-wheel
-        path: ${{ matrix.pkg }}/dist/*.whl
+        name: ${{ matrix.pkg }}
+        path: ${{ matrix.pkg }}/dist/*
+        retention-days: 7
 
   test:
     needs: build
@@ -55,6 +56,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: 'suvayu/scm'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
     - name: Make dist directory
       run: mkdir -p dist
     - name: Download all wheels
@@ -68,3 +73,13 @@ jobs:
     - name: Test scm
       run: |
         python -m pytest
+    - name: Install twine
+      run: |
+        pip install twine
+    - name: Publish
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
+        TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+      run: |
+        twine upload dist/*/*
