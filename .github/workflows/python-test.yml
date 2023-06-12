@@ -30,7 +30,7 @@ jobs:
       with:
         repository: 'suvayu/${{ matrix.pkg }}'
         path: ${{ matrix.pkg }}
-        ref: inputs.${{ matrix.pkg }}
+        ref: ${{ inputs[matrix.pkg] }}
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
