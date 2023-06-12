@@ -1,7 +1,7 @@
 name: Test specified tags
 
 on:
-  workflow_dispath:
+  workflow_dispatch:
     inputs:
       scm:
         description: Git tag to use for 'scm'
