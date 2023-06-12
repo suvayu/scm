@@ -46,7 +46,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.pkg }}-wheel
-        path: dist/*.whl
+        path: ${{ matrix.pkg }}/dist/*.whl
 
   test:
     needs: build
