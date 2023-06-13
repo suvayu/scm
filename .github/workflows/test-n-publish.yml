@@ -82,15 +82,18 @@ jobs:
         repository-url: https://test.pypi.org/legacy/
         packages-dir: dist/scm/
         skip-existing: true
+        verify-metadata: false
     - name: Publish to PyPI using trusted publishing
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         repository-url: https://test.pypi.org/legacy/
         packages-dir: dist/scm-dep/
         skip-existing: true
+        verify-metadata: false
     - name: Publish to PyPI using trusted publishing
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         repository-url: https://test.pypi.org/legacy/
         packages-dir: dist/scm-base/
         skip-existing: true
+        verify-metadata: false
