@@ -1,0 +1,99 @@
+name: Test specified tags
+
+on:
+  workflow_dispatch:
+    inputs:
+      scm:
+        description: Git tag to use for 'scm'
+        required: true
+        type: string
+      scm-dep:
+        description: Git tag to use for 'scm-dep'
+        required: true
+        type: string
+      scm-base:
+        description: Git tag to use for 'scm-base'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        pkg: ['scm', 'scm-dep', 'scm-base']
+
+    steps:
+    - name: Checkout ${{ matrix.pkg }}
+      uses: actions/checkout@v3
+      with:
+        repository: 'suvayu/${{ matrix.pkg }}'
+        path: ${{ matrix.pkg }}
+        ref: ${{ inputs[matrix.pkg] }}
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build
+    - name: Build
+      run: |
+        python -m build ${{ matrix.pkg }}
+    - name: Save ${{ matrix.pkg }} wheel
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.pkg }}
+        path: ${{ matrix.pkg }}/dist/*
+        retention-days: 7
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: 'suvayu/scm'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - name: Make dist directory
+      run: mkdir -p dist
+    - name: Download all wheels
+      uses: actions/download-artifact@v3
+      with:
+        path: dist
+    - name: Install pytest and built wheels
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install dist/*/*.whl
+    - name: Test scm
+      run: |
+        python -m pytest
+    - name: Publish to PyPI using trusted publishing
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+        packages-dir: dist/scm/
+        skip-existing: true
+        verify-metadata: false
+    - name: Publish to PyPI using trusted publishing
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+        packages-dir: dist/scm-dep/
+        skip-existing: true
+        verify-metadata: false
+    - name: Publish to PyPI using trusted publishing
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+        packages-dir: dist/scm-base/
+        skip-existing: true
+        verify-metadata: false
