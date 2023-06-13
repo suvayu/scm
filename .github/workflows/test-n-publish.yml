@@ -52,6 +52,8 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
     - uses: actions/checkout@v3
       with:
@@ -73,13 +75,8 @@ jobs:
     - name: Test scm
       run: |
         python -m pytest
-    - name: Install twine
-      run: |
-        pip install twine
-    - name: Publish
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
-        TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
-      run: |
-        twine upload dist/*/*
+    - name: Publish to PyPI using trusted publishing
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+        packaged-dir: dist/
