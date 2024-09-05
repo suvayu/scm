@@ -28,8 +28,8 @@ sa-foo = "."
 sa-bar = "../scm-dep"
 sa-baz = "../scm-base"
 
-# # default
-# [tool.conductor.branches]
-# sa-foo = "master"
-# sa-bar = "master"
-# sa-baz = "master"
+# default: master
+[tool.conductor.branches]
+sa-foo = "ci-testing"
+sa-bar = "ci-testing"
+sa-baz = "ci-testing"
