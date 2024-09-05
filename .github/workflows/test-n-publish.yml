@@ -83,6 +83,8 @@ jobs:
       matrix:
         pkg: ['scm', 'scm-dep', 'scm-base']
 
+    permissions:
+      id-token: write
     uses: ./.github/workflows/publish-wheel.yml
     with:
       pkg: ${{ matrix.pkg }}
