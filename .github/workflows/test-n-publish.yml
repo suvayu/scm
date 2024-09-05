@@ -30,12 +30,11 @@ jobs:
 
     steps:
     - name: Checkout ${{ matrix.pkg }}
-      if: inputs[matrix.pkg] != 'skip'
       uses: actions/checkout@v4
       with:
         repository: 'suvayu/${{ matrix.pkg }}'
         path: ${{ matrix.pkg }}
-        ref: ${{ inputs[matrix.pkg] }}
+        ref: ${{ inputs[matrix.pkg] != 'skip' && inputs[matrix.pkg] || 'master' }}
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
