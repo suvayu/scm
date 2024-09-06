@@ -1,0 +1,29 @@
+name: Download wheel
+description: Composite action to download the latest wheel from PyPI
+
+inputs:
+  pkg:
+    description: Package name
+    type: string
+    required: true
+  python:
+    description: Python version
+    type: string
+    required: true
+
+runs:
+  using: composite
+  steps:
+  - name: Checkout ${{ inputs.pkg }}
+    uses: actions/checkout@v4
+    with:
+      repository: 'suvayu/${{ inputs.pkg }}'
+      path: ${{ inputs.pkg }}
+  - name: Download wheel for package
+    run: |
+      mkdir -p ${{ inputs.pkg }}/dist/
+      sed -nEe 's/name[ ]*=[ ]*"?([a-z0-9_-]+)"?/\1/p' \
+        ${{ inputs.pkg }}/pyproject.toml > pkgname
+      python -m pip download -i https://test.pypi.org/simple \
+        --no-deps --python-version ${{ inputs.python }} \
+        --dest ${{ inputs.pkg }}/dist/ $(cat pkgname)

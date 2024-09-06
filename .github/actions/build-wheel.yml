@@ -1,0 +1,25 @@
+name: Build wheel
+description: Composite action to build scm* package wheels
+
+inputs:
+  pkg:
+    description: Package name
+    type: string
+    required: true
+  ver:
+    description: Release tag
+    type: string
+    required: true
+
+runs:
+  uses: composite
+  steps:
+  - name: Checkout ${{ inputs.pkg }}
+    uses: actions/checkout@v4
+    with:
+      repository: 'suvayu/${{ inputs.pkg }}'
+      path: ${{ inputs.pkg }}
+      ref: ${{ inputs.ver }}
+  - name: Build
+    run: |
+      python -m build ${{ inputs.pkg }}
