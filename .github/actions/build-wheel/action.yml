@@ -12,7 +12,7 @@ inputs:
     required: true
 
 runs:
-  uses: composite
+  using: composite
   steps:
   - name: Checkout ${{ inputs.pkg }}
     uses: actions/checkout@v4
