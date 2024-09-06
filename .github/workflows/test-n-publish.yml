@@ -39,13 +39,13 @@ jobs:
         python -m pip install build
     - name: Build
       if: inputs[matrix.pkg] != 'skip'
-      uses: ./.github/actions/build-wheel.yml
+      uses: ./.github/actions/build-wheel
       with:
         pkg: matrix.pkg
         ver: inputs[matrix.pkg]
     - name: Download wheels for packages excluded from build
       if: inputs[matrix.pkg] == 'skip'
-      uses: ./.github/actions/download-wheel.yml
+      uses: ./.github/actions/download-wheel
       with:
         pkg: matrix.pkg
         python: matrix.python
