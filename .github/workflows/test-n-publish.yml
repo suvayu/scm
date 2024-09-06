@@ -29,6 +29,8 @@ jobs:
         python: ["3.12"]
 
     steps:
+    - name: Checkout scm (for actions)
+      uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
