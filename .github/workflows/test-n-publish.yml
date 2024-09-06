@@ -43,14 +43,14 @@ jobs:
       if: inputs[matrix.pkg] != 'skip'
       uses: ./.github/actions/build-wheel
       with:
-        pkg: matrix.pkg
-        ver: inputs[matrix.pkg]
+        pkg: ${{ matrix.pkg }}
+        ver: ${{ inputs[matrix.pkg] }}
     - name: Download wheels for packages excluded from build
       if: inputs[matrix.pkg] == 'skip'
       uses: ./.github/actions/download-wheel
       with:
-        pkg: matrix.pkg
-        python: matrix.python
+        pkg: ${{ matrix.pkg }}
+        python: ${{ matrix.python }}
     - name: Save ${{ matrix.pkg }} wheel
       uses: actions/upload-artifact@v4
       with:
