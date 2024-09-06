@@ -21,5 +21,6 @@ runs:
       path: ${{ inputs.pkg }}
       ref: ${{ inputs.ver }}
   - name: Build
+    shell: bash
     run: |
       python -m build ${{ inputs.pkg }}

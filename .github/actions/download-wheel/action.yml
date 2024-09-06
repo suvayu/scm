@@ -20,6 +20,7 @@ runs:
       repository: 'suvayu/${{ inputs.pkg }}'
       path: ${{ inputs.pkg }}
   - name: Download wheel for package
+    shell: bash
     run: |
       mkdir -p ${{ inputs.pkg }}/dist/
       sed -nEe 's/name[ ]*=[ ]*"?([a-z0-9_-]+)"?/\1/p' \
